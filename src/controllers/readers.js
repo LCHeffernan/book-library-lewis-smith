@@ -32,8 +32,9 @@ exports.readSingleUser = async (req, res) => {
 exports.updatedReaderRecord = async (req, res) => {
     try {
         const { id } = req.params;
+        const { email } = req.body;
         const updateData = {
-            email: `miss_e_bennet@gmail.com`,
+            email: email,
         };
         const [ updateRows ] = await Reader.update(updateData, { where: { id } });
 
