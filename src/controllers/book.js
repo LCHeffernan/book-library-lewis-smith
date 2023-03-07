@@ -32,10 +32,12 @@ exports.readSingleBook = async (req, res) => {
 exports.updateBookRecord = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, ISBN } = req.body;
+        const { title, ISBN, genre, author } = req.body;
         const updateData = {
             title: title,
             ISBN: ISBN,
+            genre: genre,
+            author: author,
         };
 
         const [ updateRows ] = await Book.update(updateData, { where: { id } });

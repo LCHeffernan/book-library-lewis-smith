@@ -102,7 +102,7 @@ describe('/books', () => {
                 const book = books[0];
                 const response = await request(app)
                     .patch(`/books/${book.id}`)
-                    .send({ title: 'Deathly Hallows', ISBN: '12348765' });
+                    .send({ title: 'Deathly Hallows', ISBN: '12348765', genre: 'Fanta', author: 'Limp Bizkit' });
                 const updatedBookRecords = await Book.findByPk(book.id, {
                     raw: true,
                 });
@@ -110,6 +110,8 @@ describe('/books', () => {
                 expect(response.status).to.equal(200);
                 expect(updatedBookRecords.title).to.equal('Deathly Hallows');
                 expect(updatedBookRecords.ISBN).to.equal('12348765');
+                expect(updatedBookRecords.genre).to.equal('Fanta');
+                expect(updatedBookRecords.author).to.equal('Limp Bizkit');
             });
 
             it('returns a 404 if the book does not exist', async () => {
