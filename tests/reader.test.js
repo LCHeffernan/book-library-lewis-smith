@@ -4,7 +4,7 @@ const { Reader } = require('../src/models');
 const app = require('../src/app');
 
 describe('/readers', () => {
-  before(async () => Reader.sequelize.sync());
+  before(async () => await Reader.sequelize.sync({ force: true }));
 
   beforeEach(async () => {
     await Reader.destroy({ where: {} });
@@ -16,6 +16,7 @@ describe('/readers', () => {
             const response = await request(app).post('/readers').send({
                 name: 'Elizabeth Bennet',
                 email: 'future_ms_darcy@gmail.com',
+                password: 'banana',
             });
             const newReaderRecord = await Reader.findByPk(response.body.id, { 
                 raw: true 
@@ -23,6 +24,7 @@ describe('/readers', () => {
             
             expect(response.status).to.equal(201);
             expect(response.body.name).to.equal('Elizabeth Bennet');
+            expect(response.body.password).to.equal('banana');
             expect(newReaderRecord.name).to.equal('Elizabeth Bennet');
             expect(newReaderRecord.email).to.equal('future_ms_darcy@gmail.com');
         });
@@ -37,9 +39,18 @@ describe('/readers', () => {
             Reader.create({
                 name: 'Elizabeth Bennet',
                 email: 'future_ms_darcy@gmail.com',
+                password: 'banana',
             }),
-            Reader.create({ name: 'Arya Stark', email: 'vmorgul@me.com' }),
-            Reader.create({ name: 'Lyra Belacque', email: 'darknorth@msn.org' }),
+            Reader.create({ 
+                name: 'Arya Stark',
+                email: 'vmorgul@me.com', 
+                password: 'banana' 
+            }),
+            Reader.create({ 
+                name: 'Lyra Belacque',
+                email: 'darknorth@msn.org', 
+                password: 'banana' 
+            }),
         ]);
     });
 
@@ -55,6 +66,7 @@ describe('/readers', () => {
 
                 expect(reader.name).to.equal(expected.name);
                 expect(reader.email).to.equal(expected.email);
+                expect(reader.password).to.equal(expected.password);
             });
         });
     });

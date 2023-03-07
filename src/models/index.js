@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const ReaderModel = require('./readers');
+const BookModel = require('./book.js');
 
 const { PGDATABASE, PGUSER, PGPASSWORD, PGHOST, PGPORT } = process.env;
 
@@ -12,10 +13,12 @@ const setupDatabase = () => {
     });
 
     const Reader = ReaderModel(connection, Sequelize);
+    const Book = BookModel(connection, Sequelize);
 
     connection.sync({ alter: true });
     return {
-        Reader
+        Reader,
+        Book,
     };
 };
 
