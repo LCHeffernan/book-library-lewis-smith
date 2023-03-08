@@ -29,7 +29,7 @@ describe('/readers', () => {
         expect(newReaderRecord.email).to.equal('future_ms_darcy@gmail.com');
       });
 
-      it('name can not be empty', async () => {
+      it('a name is required', async () => {
         const response = await request(app).post('/readers').send({
           name: '',
           email: 'future_ms_darcy@gmail.com',

@@ -6,7 +6,7 @@ exports.create = async (req, res) => {
     const newReader = await Reader.create(req.body);
     if (!name) {
       res.status(400).json({ error: 'a name is required.' });
-    }
+    } 
     res.status(201).json(newReader);
   } catch (err) {
     res.status(500).json(err.message);
