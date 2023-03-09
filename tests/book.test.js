@@ -30,6 +30,20 @@ describe('/books', () => {
         expect(response.body.ISBN).to.equal('93482390483');
         expect(newBookRecord.title).to.equal('Goblet of Fire');
       });
+
+      it('errors if title or author is absent', async () => {
+        const response = await request(app).post('/books').send({
+          genre: 'Fantasy',
+          ISBN: '93482390483',
+        });
+        const newBookRecord = await Book.findByPk(response.body.id, {
+          raw: true,
+        });
+
+        expect(response.status).to.equal(400);
+        expect(response.body.errors.length).to.equal(2);
+        expect(newBookRecord).to.equal(null);
+      });
     });
   });
 
