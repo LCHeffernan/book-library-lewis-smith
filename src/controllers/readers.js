@@ -1,14 +1,8 @@
 const { Reader } = require('../models');
+const { createItem } = require('./helper');
 
-exports.create = async (req, res) => {
-  try {
-    const newReader = await Reader.create(req.body);
-
-  res.status(201).json(newReader);
-  } catch (err) {
-    const errorMessages = err.errors?.map((e) => e.message);
-    res.status(400).json({ errors: errorMessages });
-  }
+exports.create = async (req, res) => { 
+  createItem(res, 'reader', req.body);
 };
 
 exports.readUser = async (_, res) => {
@@ -38,9 +32,11 @@ exports.readSingleUser = async (req, res) => {
 exports.updatedReaderRecord = async (req, res) => {
   try {
     const { id } = req.params;
-    const { email } = req.body;
+    const { email, name, password } = req.body;
     const updateData = {
       email: email,
+      name: name,
+      password: password,
     };
     const [updateRows] = await Reader.update(updateData, { where: { id } });
 
