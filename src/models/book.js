@@ -24,7 +24,7 @@ module.exports = (connection, DataTypes) => {
         },
         notEmpty: {
           args: [true],
-          msg: 'author must not be empty,'
+          msg: 'author must not be empty,',
         },
       },
     },

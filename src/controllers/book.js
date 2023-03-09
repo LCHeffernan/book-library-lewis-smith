@@ -4,7 +4,7 @@ exports.create = async (req, res) => {
   try {
     const newBook = await Book.create(req.body);
 
-  res.status(201).json(newBook);
+    res.status(201).json(newBook);
   } catch (err) {
     const errorMessages = err.errors?.map((e) => e.message);
     res.status(400).json({ errors: errorMessages });

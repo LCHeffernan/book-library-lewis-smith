@@ -114,14 +114,12 @@ describe('/books', () => {
     describe('PATCH /books/:id', async () => {
       it('updates book details by id', async () => {
         const book = books[0];
-        const response = await request(app)
-          .patch(`/books/${book.id}`)
-          .send({
-            title: 'Deathly Hallows',
-            ISBN: '12348765',
-            genre: 'Fanta',
-            author: 'Limp Bizkit',
-          });
+        const response = await request(app).patch(`/books/${book.id}`).send({
+          title: 'Deathly Hallows',
+          ISBN: '12348765',
+          genre: 'Fanta',
+          author: 'Limp Bizkit',
+        });
         const updatedBookRecords = await Book.findByPk(book.id, {
           raw: true,
         });

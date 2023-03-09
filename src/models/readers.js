@@ -7,7 +7,7 @@ module.exports = (connection, DataTypes) => {
         notNull: {
           args: [true],
           msg: 'a name is required.',
-      },
+        },
         notEmpty: {
           args: [true],
           msg: 'name must not be empty',
@@ -35,11 +35,11 @@ module.exports = (connection, DataTypes) => {
         notNull: {
           args: [true],
           msg: 'a password is required.',
-      },
-      fewerThan8Characters(value) {
-        if(value.length < 8)
-          throw new Error('Password needs to be longer than 8 characters');
-      },
+        },
+        fewerThan8Characters(value) {
+          if (value.length < 8)
+            throw new Error('Password needs to be longer than 8 characters');
+        },
       },
     },
   };

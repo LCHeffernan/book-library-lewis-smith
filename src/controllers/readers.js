@@ -1,6 +1,12 @@
-const { createItem, getAllItems, getItemById, updateItem, deleteItem } = require('./helper');
+const {
+  createItem,
+  getAllItems,
+  getItemById,
+  updateItem,
+  deleteItem,
+} = require('./helper');
 
-exports.create = (req, res) => { 
+exports.create = (req, res) => {
   createItem(res, 'reader', req.body);
 };
 
