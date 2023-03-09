@@ -32,6 +32,9 @@ const createItem = async (res, model, item) => {
     }
 }
 
+
+
 module.exports = {
-    createItem
+    createItem,
+    getAllItems
 };

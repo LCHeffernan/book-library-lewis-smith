@@ -1,17 +1,12 @@
 const { Reader } = require('../models');
-const { createItem } = require('./helper');
+const { createItem, getAllItems } = require('./helper');
 
 exports.create = async (req, res) => { 
   createItem(res, 'reader', req.body);
 };
 
 exports.readUser = async (_, res) => {
-  try {
-    const readers = await Reader.findAll();
-    res.status(200).json(readers);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
+  getAllItems(res, 'reader');
 };
 
 exports.readSingleUser = async (req, res) => {
