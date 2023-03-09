@@ -35,7 +35,7 @@ const createItem = async (res, model, item) => {
 
   try {
     const newItem = await Model.create(item);
-    const newItemWithoutPassword = removePassword(newItem.get());
+    const newItemWithoutPassword = await removePassword(newItem.get());
     res.status(201).json(newItemWithoutPassword);
   } catch (err) {
     const errorMessages = err.errors?.map((e) => e.message);
@@ -63,7 +63,8 @@ const updateItem = async (res, model, item, id) => {
     res.status(404).json(get404Error(model));
   } else {
     const newlyUpdatedItem = await Model.findByPk(id);
-    res.status(200).json(newlyUpdatedItem);
+    const itemWithoutPassword = await removePassword(newlyUpdatedItem.get());
+    res.status(200).json(itemWithoutPassword);
   }
 };
 
