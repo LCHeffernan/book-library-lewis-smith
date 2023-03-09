@@ -49,7 +49,7 @@ exports.updateBookRecord = async (req, res) => {
     const [updateRows] = await Book.update(updateData, { where: { id } });
 
     if (!updateRows) {
-      res.status(404).json({ error: 'The book could not be found' });
+      res.status(404).json({ error: 'The book could not be found.' });
     }
 
     res.status(200).json(updateRows);
@@ -64,7 +64,7 @@ exports.deleteBook = async (req, res) => {
     const deletedRows = await Book.destroy({ where: { id: id } });
 
     if (!deletedRows) {
-      res.status(404).json({ error: 'The book could not be found' });
+      res.status(404).json({ error: 'The book could not be found.' });
     }
 
     res.status(204).json(deletedRows);
