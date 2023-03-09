@@ -3,31 +3,43 @@ module.exports = (connection, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      notNull: {
-        msg: 'a name is required.',
+      validate: {
+        notNull: {
+          args: [true],
+          msg: 'a name is required.',
       },
-      notEmpty: true,
+        notEmpty: {
+          args: [true],
+          msg: 'name must not be empty',
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      notNull: {
-        msg: 'an email is required.',
+      validate: {
+        isEmail: {
+          args: [true],
+          msg: 'a valid email address is required',
+        },
+        notNull: {
+          args: [true],
+          msg: 'email must not be empty',
+        },
       },
-      notEmpty: true,
-      isEmail: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      notNull: {
-        msg: 'a password is required.',
-      },
       validate: {
-        len: {
-          args: [8, 30],
-          msg: 'password must be between 8 and 30 characters long.',
-        },
+        notNull: {
+          args: [true],
+          msg: 'a password is required.',
+      },
+      fewerThan8Characters(value) {
+        if(value.length < 8)
+          throw new Error('Password needs to be longer than 8 characters');
+      },
       },
     },
   };
@@ -35,7 +47,3 @@ module.exports = (connection, DataTypes) => {
   const ReaderModel = connection.define('Reader', schema);
   return ReaderModel;
 };
-
-// Make sure the controller knows how to handle the different error messages the model might throw.
-
-// Don't forget to write tests that support this functionality

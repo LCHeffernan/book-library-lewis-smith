@@ -2,14 +2,25 @@ const { Reader } = require('../models');
 
 exports.create = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, email } = req.body;
     const newReader = await Reader.create(req.body);
-    if (!name) {
-      res.status(400).json({ error: 'a name is required.' });
-    } 
-    res.status(201).json(newReader);
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  //   if (!name) {
+  //     res.status(400).json({ error: 'a name is required.' });
+  //   } else if (!email){
+  //     res.status(400).json({ error: 'an email is required.'});
+  //   } else if(!emailRegex.test(email)){
+  //     res.status(400).json({ error: 'email should be valid.'});
+  //   }
+  //   res.status(201).json(newReader);
+  // } catch (err) {
+  //   res.status(500).json(err.message);
+  // }
+
+  res.status(201).json(newReader);
   } catch (err) {
-    res.status(500).json(err.message);
+    const errorMessages = err.errors?.map((e) => e.message);
+    res.status(400).json({ errors: errorMessages });
   }
 };
 
