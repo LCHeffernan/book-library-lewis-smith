@@ -1,15 +1,8 @@
 const { Book } = require('../models');
-const { getItemById } = require('./helper');
+const { getItemById, createItem } = require('./helper');
 
 exports.create = async (req, res) => {
-  try {
-    const newBook = await Book.create(req.body);
-
-    res.status(201).json(newBook);
-  } catch (err) {
-    const errorMessages = err.errors?.map((e) => e.message);
-    res.status(400).json({ errors: errorMessages });
-  }
+  createItem(res, 'book', req.body);
 };
 
 exports.readBook = async (_, res) => {
@@ -23,19 +16,6 @@ exports.readBook = async (_, res) => {
 
 exports.readSingleBook = async (req, res) => {
   getItemById(res, 'book', req.params.id);
-
-  // try {
-  //   const { id } = req.params;
-  //   const bookId = id;
-  //   const book = await Book.findByPk(bookId);
-
-  //   if (!book) {
-  //     res.status(404).json({ error: 'The book could not be found.' });
-  //   }
-  //   res.status(200).json(book);
-  // } catch (err) {
-  //   res.status(500).json(err.message);
-  // }
 };
 
 exports.updateBookRecord = async (req, res) => {
