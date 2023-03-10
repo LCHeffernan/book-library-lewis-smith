@@ -6,7 +6,7 @@ const getModel = (model) => {
   const models = {
     book: Book,
     reader: Reader,
-    genre: Genre, 
+    genre: Genre,
   };
 
   return models[model];
