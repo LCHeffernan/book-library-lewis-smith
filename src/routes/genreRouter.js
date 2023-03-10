@@ -10,4 +10,6 @@ router.get('/:id', genreController.readSingleGenre);
 
 router.patch('/:id', genreController.updateGenre);
 
+router.delete('/:id', genreController.deleteGenre);
+
 module.exports = router;
