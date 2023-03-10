@@ -17,6 +17,6 @@ module.exports = (connection, DataTypes) => {
     },
   };
 
-  const genreModel = connection.define('Genre', schema);
-  return genreModel;
+  const GenreModel = connection.define('Genre', schema);
+  return GenreModel;
 };
