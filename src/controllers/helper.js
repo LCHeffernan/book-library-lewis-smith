@@ -46,12 +46,12 @@ const createItem = async (res, model, item) => {
 const getItemById = async (res, model, id) => {
   const Model = getModel(model);
   const item = await Model.findByPk(id);
-  
+
   if (!item) {
     res.status(404).json(get404Error(model));
   } else {
-  const itemWithoutPassword = await removePassword(item.dataValues);
-  res.status(200).json(itemWithoutPassword);
+    const itemWithoutPassword = await removePassword(item.dataValues);
+    res.status(200).json(itemWithoutPassword);
   }
 };
 
