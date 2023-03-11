@@ -3,6 +3,7 @@ const {
   getAllItems,
   getItemById,
   updateItem,
+  deleteItem,
 } = require('./helper');
 
 exports.create = (req, res) => {
@@ -19,4 +20,8 @@ exports.getItemById = (req, res) => {
 
 exports.updateItemById = (req, res) => {
   updateItem(res, 'author', req.body, req.params.id);
+};
+
+exports.deleteItemById = (req, res) => {
+  deleteItem(res, 'author', req.params.id);
 };

@@ -118,7 +118,7 @@ describe('/authors', () => {
     });
 
     describe('PATCH authors/:id', () => {
-      it('gets an author by id', async () => {
+      it('updates an author by id', async () => {
         const author = authors[0];
         const response = await request(app)
           .patch(`/authors/${author.id}`)
@@ -135,6 +135,24 @@ describe('/authors', () => {
         const response = await request(app)
           .patch('/authors/12345')
           .send({ author: 'anAuthor' });
+
+        expect(response.status).to.equal(404);
+        expect(response.body.error).to.equal('The author could not be found.');
+      });
+    });
+
+    describe('DELETE authors/:id', () => {
+      it('deletes an author by id', async () => {
+        const author = authors[0];
+        const response = await request(app).delete(`/authors/${author.id}`);
+        const deletedAuthor = await Author.findByPk(author.id, { raw: true });
+
+        expect(response.status).to.equal(204);
+        expect(deletedAuthor).to.equal(null);
+      });
+
+      it('returns a 404 if the author does not exist', async () => {
+        const response = await request(app).delete('/authors/12345');
 
         expect(response.status).to.equal(404);
         expect(response.body.error).to.equal('The author could not be found.');

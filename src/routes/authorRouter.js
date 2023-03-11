@@ -10,4 +10,6 @@ router.get('/:id', authorController.getItemById);
 
 router.patch('/:id', authorController.updateItemById);
 
+router.delete('/:id', authorController.deleteItemById);
+
 module.exports = router;
