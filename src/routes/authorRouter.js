@@ -6,4 +6,6 @@ router.post('/', authorController.create);
 
 router.get('/', authorController.readAll);
 
+router.get('/:id', authorController.getItemById);
+
 module.exports = router;

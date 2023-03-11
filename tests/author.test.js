@@ -98,5 +98,23 @@ describe('/authors', () => {
         });
       });
     });
+
+    describe('GET authors/:id', () => {
+      it('gets an author by id', async () => {
+        const author = authors[0];
+        const response = await request(app).get(`/authors/${author.id}`);
+
+        expect(response.status).to.equal(200);
+        expect(response.body.author).to.equal(author.author);
+      });
+
+      it('returns a 404 if the author does not exist', async () => {
+        const author = authors[0];
+        const response = await request(app).get('/authors/12345');
+
+        expect(response.status).to.equal(404);
+        expect(response.body.error).to.equal('The author could not be found.');
+      });
+    });
   });
 });
