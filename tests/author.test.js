@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const request = require('supertest');
-const { Author } = require('../src/models');
+const { Author, Genre } = require('../src/models');
 const app = require('../src/app');
 
 describe('/authors', () => {
@@ -61,6 +61,41 @@ describe('/authors', () => {
 
         expect(newAuthorRecord.author).to.equal('JK Rowling');
         expect(newAuthorRecord2).to.equal(null);
+      });
+    });
+  });
+
+  describe('with records in the database', () => {
+    let authors;
+
+    beforeEach(async () => {
+      await Author.destroy({ where: {} });
+
+      authors = await Promise.all([
+        Author.create({
+          author: 'JK Rowling',
+        }),
+        Author.create({
+          author: 'Fyodor Dostoyevsky',
+        }),
+        Author.create({
+          author: 'Stephen King',
+        }),
+      ]);
+    });
+
+    describe('GET /authors', () => {
+      it('gets all author records', async () => {
+        const response = await request(app).get('/authors');
+
+        expect(response.status).to.equal(200);
+        expect(response.body.length).to.equal(3);
+
+        response.body.forEach((author) => {
+          const expected = authors.find((a) => a.id === author.id);
+
+          expect(author.author).to.equal(expected.author);
+        });
       });
     });
   });

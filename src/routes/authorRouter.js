@@ -4,4 +4,6 @@ const authorController = require('../controllers/author');
 
 router.post('/', authorController.create);
 
+router.get('/', authorController.readAll);
+
 module.exports = router;
