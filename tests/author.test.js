@@ -109,7 +109,6 @@ describe('/authors', () => {
       });
 
       it('returns a 404 if the author does not exist', async () => {
-        const author = authors[0];
         const response = await request(app).get('/authors/12345');
 
         expect(response.status).to.equal(404);
