@@ -8,4 +8,6 @@ router.get('/', authorController.readAll);
 
 router.get('/:id', authorController.getItemById);
 
+router.patch('/:id', authorController.updateItemById);
+
 module.exports = router;

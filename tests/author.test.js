@@ -116,5 +116,29 @@ describe('/authors', () => {
         expect(response.body.error).to.equal('The author could not be found.');
       });
     });
+
+    describe('PATCH authors/:id', () => {
+      it('gets an author by id', async () => {
+        const author = authors[0];
+        const response = await request(app)
+          .patch(`/authors/${author.id}`)
+          .send({ author: 'Dmitri Koslova' });
+        const updatedAuthorRecord = await Author.findByPk(author.id, {
+          raw: true,
+        });
+
+        expect(response.status).to.equal(200);
+        expect(updatedAuthorRecord.author).to.equal('Dmitri Koslova');
+      });
+
+      it('returns a 404 if the author does not exist', async () => {
+        const response = await request(app)
+          .patch('/authors/12345')
+          .send({ author: 'anAuthor' });
+
+        expect(response.status).to.equal(404);
+        expect(response.body.error).to.equal('The author could not be found.');
+      });
+    });
   });
 });
