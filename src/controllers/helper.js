@@ -21,6 +21,13 @@ const removePassword = (obj) => {
   return obj;
 };
 
+const getAllBooks = async (res, model) =>{
+  const Model = getModel(model);
+  const item = await Model.findAll({ include: Book });
+
+  res.status(200).json(item);
+};
+
 const getAllItems = async (res, model) => {
   const Model = getModel(model);
 
@@ -47,7 +54,7 @@ const createItem = async (res, model, item) => {
 
 const getItemById = async (res, model, id) => {
   const Model = getModel(model);
-  const item = await Model.findByPk(id);
+  const item = await Model.findByPk(id, { include: Genre });
 
   if (!item) {
     res.status(404).json(get404Error(model));
@@ -88,4 +95,5 @@ module.exports = {
   getItemById,
   updateItem,
   deleteItem,
+  getAllBooks
 };

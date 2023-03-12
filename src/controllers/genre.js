@@ -1,6 +1,6 @@
 const {
   createItem,
-  getAllItems,
+  getAllBooks,
   getItemById,
   updateItem,
   deleteItem,
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 };
 
 exports.readGenre = (_, res) => {
-  getAllItems(res, 'genre');
+  getAllBooks(res, 'genre');
 };
 
 exports.readSingleGenre = (req, res) => {
