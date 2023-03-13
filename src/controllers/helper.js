@@ -41,7 +41,6 @@ const getAllItems = async (res, model) => {
 
 const createItem = async (res, model, item) => {
   const Model = getModel(model);
-
   try {
     const newItem = await Model.create(item);
     const newItemWithoutPassword = await removePassword(newItem.get());
@@ -54,13 +53,28 @@ const createItem = async (res, model, item) => {
 
 const getItemById = async (res, model, id) => {
   const Model = getModel(model);
-  const item = await Model.findByPk(id, { include: Genre });
-
-  if (!item) {
-    res.status(404).json(get404Error(model));
-  } else {
-    const itemWithoutPassword = await removePassword(item.dataValues);
-    res.status(200).json(itemWithoutPassword);
+  let item;
+ 
+  try{
+    if(Model === 'Book') {
+      item = await Model.findByPk(id, { include: ['Genre', 'Author'],
+     });
+    } else if(Model === 'Reader'){
+      item = await Model.findByPk(id)
+    }
+    
+    else {
+       item = await Model.findByPk(id, {
+        attributes: { exclude: 'password'},
+       });
+    }
+    if( item == null ) {
+      res.status(404).json({ error: `The ${model} could not be found.` });
+    }
+    res.status(200).json(item);
+  } catch (err) {
+    const errorMessages = err.errors?.map((e) => e.message);
+    res.status(400).json({ errors: errorMessages });
   }
 };
 

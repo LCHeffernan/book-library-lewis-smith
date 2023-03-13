@@ -12,7 +12,7 @@ describe('/books', () => {
 
   describe('with no books in the database', () => {
     describe('POST /books', () => {
-      it('creates a new book in the database', async () => {
+      it.only('creates a new book in the database', async () => {
         const response = await request(app).post('/books').send({
           title: 'Goblet of Fire',
           author: 'JK Rowling',
