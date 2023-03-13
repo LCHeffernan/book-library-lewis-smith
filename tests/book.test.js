@@ -4,20 +4,25 @@ const { Book } = require('../src/models');
 const app = require('../src/app');
 
 describe('/books', () => {
-
   let author;
   let genre;
 
   before(async () => {
-    await Book.sequelize.sync({ force: true })
-  
+    await Book.sequelize.sync({ force: true });
+
     author = await request(app).post('/authors').send({ author: 'JK Rowling' });
     genre = await request(app).post('/genres').send({ genre: 'Fantasy' });
-    author = await request(app).post('/authors').send({ author: 'Fyodor Dostojevski' });
-    genre = await request(app).post('/genres').send({ genre: 'Existentialism' });
-    author = await request(app).post('/authors').send({ author: 'Jordan Peterson' });
+    author = await request(app)
+      .post('/authors')
+      .send({ author: 'Fyodor Dostojevski' });
+    genre = await request(app)
+      .post('/genres')
+      .send({ genre: 'Existentialism' });
+    author = await request(app)
+      .post('/authors')
+      .send({ author: 'Jordan Peterson' });
     genre = await request(app).post('/genres').send({ genre: 'Psychology' });
-});
+  });
 
   beforeEach(async () => {
     await Book.destroy({ where: {} });
@@ -44,7 +49,6 @@ describe('/books', () => {
 
       it('errors if title, author, or genre are absent', async () => {
         const response = await request(app).post('/books').send({
-
           ISBN: '93482390483',
         });
         const newBookRecord = await Book.findByPk(response.body.id, {
@@ -64,7 +68,7 @@ describe('/books', () => {
     beforeEach(async () => {
       books = await Promise.all([
         Book.create({
-          title: "Goblet of Fire",
+          title: 'Goblet of Fire',
           authorId: 1,
           genreId: 1,
           ISBN: '93482390483',
@@ -83,7 +87,7 @@ describe('/books', () => {
         }),
       ]);
     });
-  
+
     describe('GET /books', () => {
       it('gets all books records', async () => {
         const response = await request(app).get('/books');
@@ -93,7 +97,7 @@ describe('/books', () => {
 
         response.body.forEach((book) => {
           const expected = books.find((a) => a.id === book.id);
- 
+
           expect(book.title).to.equal(expected.title);
           expect(book.authorId).to.equal(expected.authorId);
           expect(book.genreId).to.equal(expected.genreId);

@@ -68,7 +68,7 @@ describe('/genres', () => {
     let genres;
 
     beforeEach(async () => {
-        genres = await Promise.all([
+      genres = await Promise.all([
         Genre.create({
           genre: 'Fantasy',
         }),
@@ -83,12 +83,11 @@ describe('/genres', () => {
 
     describe('GET /genres', () => {
       it('gets all genre records', async () => {
- 
         const response = await request(app).get('/genres');
 
         expect(response.status).to.equal(200);
         expect(response.body.length).to.equal(3);
-  
+
         response.body.forEach((genre) => {
           const expected = genres.find((a) => a.id === genre.id);
 

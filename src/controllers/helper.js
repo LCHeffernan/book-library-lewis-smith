@@ -21,7 +21,7 @@ const removePassword = (obj) => {
   return obj;
 };
 
-const getAllBooks = async (res, model) =>{
+const getAllBooks = async (res, model) => {
   const Model = getModel(model);
   const item = await Model.findAll({ include: Book });
 
@@ -54,21 +54,18 @@ const createItem = async (res, model, item) => {
 const getItemById = async (res, model, id) => {
   const Model = getModel(model);
   let item;
- 
-  try{
-    if(Model === 'Book') {
-      item = await Model.findByPk(id, { include: ['Genre', 'Author'],
-     });
-    } else if(Model === 'Reader'){
-      item = await Model.findByPk(id)
+
+  try {
+    if (Model === 'Book') {
+      item = await Model.findByPk(id, { include: ['Genre', 'Author'] });
+    } else if (Model === 'Reader') {
+      item = await Model.findByPk(id);
+    } else {
+      item = await Model.findByPk(id, {
+        attributes: { exclude: 'password' },
+      });
     }
-    
-    else {
-       item = await Model.findByPk(id, {
-        attributes: { exclude: 'password'},
-       });
-    }
-    if( item == null ) {
+    if (item == null) {
       res.status(404).json({ error: `The ${model} could not be found.` });
     }
     res.status(200).json(item);
@@ -109,5 +106,5 @@ module.exports = {
   getItemById,
   updateItem,
   deleteItem,
-  getAllBooks
+  getAllBooks,
 };

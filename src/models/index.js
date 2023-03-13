@@ -20,7 +20,7 @@ const setupDatabase = () => {
   const Author = AuthorModel(connection, Sequelize);
 
   Book.belongsTo(Author, {
-    as: "author",
+    as: 'author',
     foreignKey: {
       allowNull: false,
       validate: {
@@ -31,7 +31,7 @@ const setupDatabase = () => {
   });
 
   Book.belongsTo(Genre, {
-    as: "genre",
+    as: 'genre',
     foreignKey: {
       allowNull: false,
       validate: {
