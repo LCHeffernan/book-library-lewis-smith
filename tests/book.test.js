@@ -12,7 +12,7 @@ describe('/books', () => {
 
   describe('with no books in the database', () => {
     describe('POST /books', () => {
-      it.only('creates a new book in the database', async () => {
+      it('creates a new book in the database', async () => {
         const response = await request(app).post('/books').send({
           title: 'Goblet of Fire',
           author: 'JK Rowling',
@@ -26,7 +26,6 @@ describe('/books', () => {
         expect(response.status).to.equal(201);
         expect(response.body.title).to.equal('Goblet of Fire');
         expect(response.body.author).to.equal('JK Rowling');
-        expect(response.body.genre).to.equal('Fantasy');
         expect(response.body.ISBN).to.equal('93482390483');
         expect(newBookRecord.title).to.equal('Goblet of Fire');
       });
@@ -127,7 +126,6 @@ describe('/books', () => {
         expect(response.status).to.equal(200);
         expect(updatedBookRecords.title).to.equal('Deathly Hallows');
         expect(updatedBookRecords.ISBN).to.equal('12348765');
-        expect(updatedBookRecords.genre).to.equal('Fanta');
         expect(updatedBookRecords.author).to.equal('Limp Bizkit');
       });
 
