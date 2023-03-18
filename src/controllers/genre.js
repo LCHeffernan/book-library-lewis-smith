@@ -6,22 +6,30 @@ const {
   deleteItem,
 } = require('./helper');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   createItem(res, 'genre', req.body);
 };
 
-exports.readGenre = (_, res) => {
+const readGenre = (_, res) => {
   getAllItems(res, 'genre');
 };
 
-exports.readSingleGenre = (req, res) => {
+const readSingleGenre = (req, res) => {
   getItemById(res, 'genre', req.params.id);
 };
 
-exports.updateGenre = (req, res) => {
+const updateGenre = (req, res) => {
   updateItem(res, 'genre', req.body, req.params.id);
 };
 
-exports.deleteGenre = (req, res) => {
+const deleteGenre = (req, res) => {
   deleteItem(res, 'genre', req.params.id);
+};
+
+module.exports = {
+  create,
+  readGenre,
+  readSingleGenre,
+  updateGenre,
+  deleteGenre,
 };

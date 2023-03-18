@@ -6,10 +6,10 @@ router.post('/', authorController.create);
 
 router.get('/', authorController.readAll);
 
-router.get('/:id', authorController.getItemById);
+router.get('/:id', authorController.getAuthorById);
 
-router.patch('/:id', authorController.updateItemById);
+router.patch('/:id', authorController.updateAuthorById);
 
-router.delete('/:id', authorController.deleteItemById);
+router.delete('/:id', authorController.deleteAuthorById);
 
 module.exports = router;

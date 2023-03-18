@@ -6,22 +6,30 @@ const {
   deleteItem,
 } = require('./helper');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   createItem(res, 'author', req.body);
 };
 
-exports.readAll = (_, res) => {
+const readAll = (_, res) => {
   getAllItems(res, 'author');
 };
 
-exports.getItemById = (req, res) => {
+const getAuthorById = (req, res) => {
   getItemById(res, 'author', req.params.id);
 };
 
-exports.updateItemById = (req, res) => {
+const updateAuthorById = (req, res) => {
   updateItem(res, 'author', req.body, req.params.id);
 };
 
-exports.deleteItemById = (req, res) => {
+const deleteAuthorById = (req, res) => {
   deleteItem(res, 'author', req.params.id);
+};
+
+module.exports = {
+  create,
+  readAll,
+  getAuthorById,
+  updateAuthorById,
+  deleteAuthorById,
 };
